@@ -16,6 +16,7 @@ import { LoginPage } from "../pages/login/login";
 
 import { UserProvider } from '../providers/user/user';
 import { LoginProvider } from '../providers/login/login';
+import { CustomerProvider } from '../providers/customer/customer';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { LoginProvider } from '../providers/login/login';
     StatusBar,
     SplashScreen,
     { provide:  "API_URL", useValue: "http://localhost:3000" },
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    CustomerProvider
   ]
 })
 export class AppModule { }

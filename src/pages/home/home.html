@@ -3,14 +3,19 @@
     <ion-title>
       Ionic Blank
     </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list>
-    <button ion-item *ngFor="let user of users" (click)="goDetail(user)">
-      <h2>{{ user.name }}</h2>
-      <p>{{ user.email }}</p>
+    <button ion-item *ngFor="let customer of customers" (click)="goDetail(customer)">
+      <h2>{{ customer.first_name }}</h2>
+      <p>{{ customer.telephone }}</p>
     </button>
   </ion-list>
 </ion-content>

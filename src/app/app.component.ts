@@ -20,11 +20,9 @@ export class MyApp {
       splashScreen.hide();
 
       const token = localStorage.getItem("token");
-      if (token) {
-        this.rootPage = TabsPage;
-      } else {
-        this.rootPage = LoginPage;
-      }
+      token ? this.rootPage = TabsPage : this.rootPage = LoginPage;
+
+
 
     });
 
