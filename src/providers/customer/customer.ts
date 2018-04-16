@@ -5,7 +5,7 @@ import { Injectable, Inject } from '@angular/core';
 @Injectable()
 export class CustomerProvider {
 
-  constructor(public http: HttpClient, @Inject("API_URL") private url: string) {}
+  constructor(public http: HttpClient, @Inject("API_URL") private url: string) { }
 
   public getCustomers(token: string) {
     return new Promise((resolve, reject) => {
@@ -49,5 +49,19 @@ export class CustomerProvider {
         )
     })
   }
+
+  public remove(token: string, customerId: number) {
+    return new Promise((resolve, reject) => {
+      const headers = new HttpHeaders({ "Content-Type": "application/json", "x-access-token": token });
+
+      this.http.delete(`${this.url}/customers/${customerId}`, { headers: headers })
+        .subscribe(
+          (data) => resolve(data),
+          (error) => reject(error)
+        )
+    });
+
+  }
+
 
 }
