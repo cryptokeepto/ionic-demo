@@ -93,7 +93,7 @@ export class AddCustomerPage {
   private browsePicture() {
     const options: CameraOptions = {
       destinationType: 0,
-      sourceType: 1
+      sourceType: 0
     }
     this.camera.getPicture(options)
       .then((imageData) => {
@@ -101,7 +101,7 @@ export class AddCustomerPage {
         this.base64Image = 'data:image/jpeg;base64,' + imageData;
       })
       .catch((error) => {
-        console.warn("Can not open camera");
+        console.warn("Can not open library camera");
         throw error
       })
   }
