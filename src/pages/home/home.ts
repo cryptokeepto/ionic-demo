@@ -4,32 +4,44 @@ import { NavController, LoadingController, App } from 'ionic-angular';
 import { MapPage } from "../map/map";
 import { CustomerProvider } from "../../providers/customer/customer";
 import { LoginPage } from "../login/login";
+import { AddCustomerPage } from "../add-customer/add-customer";
 
 interface IResponse {
   ok: boolean,
   rows: Object[]
 }
 
+interface IRow {
+  id: number,
+  first_name: string,
+  last_name: string,
+  sex: string,
+  image: string,
+  telephone: string,
+  customer_type_id: number,
+  email: string
+}
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [ CustomerProvider ]
+  providers: [CustomerProvider]
 })
 export class HomePage {
 
-  private customers: any;
+  private customers: any = [];
   private token: string;
 
   constructor(
-    public navCtrl: NavController, 
-    private customerProvider: CustomerProvider, 
+    public navCtrl: NavController,
+    private customerProvider: CustomerProvider,
     private loadingCtrl: LoadingController,
     private app: App
   ) {
     this.token = localStorage.getItem("token");
   }
 
-  private ionViewDidLoad() {}
+  private ionViewDidLoad() { }
 
   private ionViewWillEnter() {
     // loading
@@ -43,7 +55,6 @@ export class HomePage {
       .then((data: IResponse) => {
         if (data.ok) {
           this.customers = data.rows;
-          console.log(this.customers)
           loading.dismiss();
         } else {
           loading.dismiss();
@@ -66,5 +77,10 @@ export class HomePage {
     localStorage.removeItem("token");
     nav.setRoot(LoginPage);
   }
+
+  private add() {
+    this.navCtrl.push(AddCustomerPage)
+  }
+
 
 }

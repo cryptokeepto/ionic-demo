@@ -1,0 +1,103 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>เพิ่มข้อมูลลูกค้า</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-left (click)="save()">
+        <ion-icon name="create"></ion-icon>
+        Save
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-item-group>
+    <ion-item-divider color="light">Customer Information</ion-item-divider>
+
+    <ion-item>
+      <ion-label floating>ชื่อ</ion-label>
+      <ion-input type="text" [(ngModel)]="firstName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>สกุล</ion-label>
+      <ion-input type="text" [(ngModel)]="lastName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>เพศ</ion-label>
+      <ion-select [(ngModel)]="sex">
+        <ion-option [value]="s.id" *ngFor="let s of sexes">{{ s.name }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>อีเมล์</ion-label>
+      <ion-input type="email" [(ngModel)]="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>โทรศัพท์</ion-label>
+      <ion-input type="telephone" [(ngModel)]="telephone"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="date"></ion-datetime>
+    </ion-item>
+
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider color="light">Other information</ion-item-divider>
+    <ion-item>
+      <ion-label>ประเภทลูกค้า</ion-label>
+      <ion-select [(ngModel)]="customerTypeId">
+        <ion-option [value]="group.id" *ngFor="let group of groups">{{ group.name }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider color="light">รูปภาพ</ion-item-divider>
+    <ion-card>
+
+      <ion-item>
+        <ion-avatar item-left>
+          <!-- <img src="./assets/img/camera.png"> -->
+        </ion-avatar>
+        <h2>Take or Browse picture</h2>
+        <p>customer's picture</p>
+      </ion-item>
+
+      <img [src]="base64Image" *ngIf="base64Image">
+      <img src="./assets/imgs/logo.png" *ngIf="!base64Image">
+
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-left clear small (click)="takePicture()">
+            <ion-icon name="camera"></ion-icon>
+            <div>Camera</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left clear small (click)="browsePicture()">
+            <ion-icon name="folder-open"></ion-icon>
+            <div>Browse</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left clear small color="danger" (click)="removePicture()" [disabled]="!base64Image">
+            <ion-icon name="trash"></ion-icon>
+            <div>Remove</div>
+          </button>
+        </ion-col>
+      </ion-row>
+
+    </ion-card>
+  </ion-item-group>
+
+</ion-content>

@@ -13,6 +13,7 @@ import { TabsPage } from "../pages/tabs/tabs";
 import { MessagePage } from "../pages/message/message";
 import { SettingPage } from "../pages/setting/setting";
 import { LoginPage } from "../pages/login/login";
+import { AddCustomerPage } from "../pages/add-customer/add-customer";
 
 import { UserProvider } from '../providers/user/user';
 import { LoginProvider } from '../providers/login/login';
@@ -27,7 +28,8 @@ import { CustomerProvider } from '../providers/customer/customer';
     TabsPage,
     MessagePage,
     SettingPage,
-    LoginPage
+    LoginPage,
+    AddCustomerPage
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ import { CustomerProvider } from '../providers/customer/customer';
     TabsPage,
     MessagePage,
     SettingPage,
-    LoginPage
+    LoginPage,
+    AddCustomerPage
   ],
   providers: [
     StatusBar,
