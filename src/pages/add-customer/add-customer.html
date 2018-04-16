@@ -65,13 +65,13 @@
     <ion-item-divider color="light">รูปภาพ</ion-item-divider>
     <ion-card>
 
-      <ion-item>
+      <!-- <ion-item>
         <ion-avatar item-left>
-          <!-- <img src="./assets/img/camera.png"> -->
+          <img src="./assets/img/camera.png">
         </ion-avatar>
         <h2>Take or Browse picture</h2>
         <p>customer's picture</p>
-      </ion-item>
+      </ion-item> -->
 
       <img [src]="base64Image" *ngIf="base64Image">
       <img src="./assets/imgs/logo.png" *ngIf="!base64Image">

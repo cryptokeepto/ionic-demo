@@ -21,7 +21,7 @@
     <ion-searchbar (ionInput)="search($event)" (ionClear)="getCustomers()" debounce="1000"></ion-searchbar>
   </ion-toolbar>
   <ion-list>
-    <button ion-item *ngFor="let customer of customers">
+    <button ion-item *ngFor="let customer of customers" (click)="goDetail(customer)">
       <ion-thumbnail item-left>
         <img [src]="customer.image">
       </ion-thumbnail>

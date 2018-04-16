@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CustomerProvider } from "../../providers/customer/customer";
-
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import * as moment from "moment";
-import { StaticInjector } from '@angular/core/src/di/injector';
 
 interface IResponse {
   id: number, 
@@ -14,6 +13,7 @@ interface IResponse {
 @Component({
   selector: 'page-add-customer',
   templateUrl: 'add-customer.html',
+  providers: [ Camera ]
 })
 export class AddCustomerPage {
 
@@ -27,11 +27,17 @@ export class AddCustomerPage {
   private email: string;
   private telephone: string;
   private customerTypeId: number;
-  // private image: string;
+  private image: string;
   private date: string;
+  private base64Image: string;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private customerProvider: CustomerProvider) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private customerProvider: CustomerProvider,
+    private camera: Camera
+  ) {
     this.token = localStorage.getItem("token");
     this.sexes.push({ id: 1, name: "ชาย" });
     this.sexes.push({ id: 2, name: "หญิง" });
@@ -56,7 +62,7 @@ export class AddCustomerPage {
       email: this.email,
       telephone: this.telephone,
       customerTypeId: this.customerTypeId,
-      image: null
+      image: this.image ? this.image : null
     }
 
     this.customerProvider.saveCustomer(this.token, customer)
@@ -65,6 +71,38 @@ export class AddCustomerPage {
       })
       .catch((error) => {
         console.error(error);
+      })
+  }
+
+  private takePicture() {
+    const options: CameraOptions = {
+      destinationType: 0,
+      sourceType: 1
+    }
+    this.camera.getPicture(options)
+      .then((imageData) => {
+        this.image = imageData;
+        this.base64Image = 'data:image/jpeg;base64,' + imageData;
+      })
+      .catch((error) => {
+        console.warn("Can not open camera");
+        throw error
+      })
+  }
+
+  private browsePicture() {
+    const options: CameraOptions = {
+      destinationType: 0,
+      sourceType: 1
+    }
+    this.camera.getPicture(options)
+      .then((imageData) => {
+        this.image = imageData;
+        this.base64Image = 'data:image/jpeg;base64,' + imageData;
+      })
+      .catch((error) => {
+        console.warn("Can not open camera");
+        throw error
       })
   }
 

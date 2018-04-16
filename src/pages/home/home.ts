@@ -55,6 +55,9 @@ export class HomePage {
       .then((data: IResponse) => {
         if (data.ok) {
           this.customers = data.rows;
+          this.customers.map((v) => {
+            v.image = "data:image/jpeg;base64," + v.image
+          })
           loading.dismiss();
         } else {
           loading.dismiss();
@@ -67,7 +70,7 @@ export class HomePage {
   }
 
   private goDetail(customer) {
-    console.log(customer)
+    console.log(this.customers)
     // this.navCtrl.push(MapPage, { _user: user });
   }
 

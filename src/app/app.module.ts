@@ -51,7 +51,7 @@ import { CustomerProvider } from '../providers/customer/customer';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide:  "API_URL", useValue: "http://localhost:3000" },
+    { provide:  "API_URL", useValue: "http://192.168.1.110:3000" },
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     CustomerProvider
   ]
