@@ -146,7 +146,7 @@ export class HomePage {
           text: 'แก้ไข',
           icon: !this.platform.is('ios') ? 'create' : null,
           handler: () => {
-            console.log("edit")
+            this.navCtrl.push(AddCustomerPage, { id: customer.id });
           }
         },
         {

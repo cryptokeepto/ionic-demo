@@ -23,7 +23,6 @@ export class MyApp {
       token ? this.rootPage = TabsPage : this.rootPage = LoginPage;
 
 
-
     });
 
   }

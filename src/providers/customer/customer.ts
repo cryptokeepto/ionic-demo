@@ -63,5 +63,17 @@ export class CustomerProvider {
 
   }
 
+  public detail(token: string, customerId: number) {
+    return new Promise((resolve, reject) => {
+      const headers = new HttpHeaders({ "Content-Type": "application/json", "x-access-token": token });
+
+      this.http.get(`${this.url}/customers/detail/${customerId}`, { headers: headers })
+      .subscribe(
+        (data) => resolve(data),
+        (error) => reject(error)
+      )
+    })
+  }
+
 
 }

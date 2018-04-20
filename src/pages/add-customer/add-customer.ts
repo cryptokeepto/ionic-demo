@@ -5,15 +5,28 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import * as moment from "moment";
 
 interface IResponse {
-  id: number, 
-  name: string 
+  id: number,
+  name: string
 }
+
+interface ICustomer {
+  id: number,
+  customer_type: number,
+  email: string,
+  first_name: string,
+  last_name: string,
+  image?: string,
+  sex: string,
+  telephone: number
+}
+
+
 
 @IonicPage()
 @Component({
   selector: 'page-add-customer',
   templateUrl: 'add-customer.html',
-  providers: [ Camera ]
+  providers: [Camera]
 })
 export class AddCustomerPage {
 
@@ -25,16 +38,17 @@ export class AddCustomerPage {
   private lastName: string;
   private sex: string;
   private email: string;
-  private telephone: string;
+  private telephone: number;
   private customerTypeId: number;
   private image: string;
   private date: string;
   private base64Image: string;
+  private customerId: number;
 
 
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
+    public navCtrl: NavController,
+    public navParams: NavParams,
     private customerProvider: CustomerProvider,
     private camera: Camera
   ) {
@@ -42,6 +56,7 @@ export class AddCustomerPage {
     this.sexes.push({ id: 1, name: "ชาย" });
     this.sexes.push({ id: 2, name: "หญิง" });
     this.date = moment().format("YYYY-MM-DD");
+    this.customerId = this.navParams.get("id"); // get id from home component
   }
 
   ionViewDidLoad() {
@@ -52,6 +67,30 @@ export class AddCustomerPage {
       .catch((error) => {
         console.error(error);
       })
+  }
+
+  ionViewWillEnter() {
+    if (this.customerId !== undefined) {
+      this.customerProvider.detail(this.token, this.customerId)
+        .then((data: { ok: boolean, customer: ICustomer }) => {
+          if (data.ok) {
+            const customer = data.customer;
+
+            this.firstName = customer.first_name;
+            this.lastName = customer.last_name;
+            this.sex = customer.sex;
+            this.customerTypeId = customer.customer_type;
+            this.email = customer.email;
+            this.telephone = customer.telephone;
+            this.base64Image = "data:image/jpeg;base64," + customer.image;
+          } else {
+            console.error("get data fail");
+          }
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    }
   }
 
   private save() {
@@ -106,6 +145,6 @@ export class AddCustomerPage {
       })
   }
 
- 
+
 
 }
