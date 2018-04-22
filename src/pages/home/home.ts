@@ -65,26 +65,44 @@ export class HomePage {
     loading.present();
 
     this.customerProvider.getCustomers(this.token)
-    .then((data: IResponse) => {
-      if (data.ok) {
-        this.customers = data.rows;
-        this.customers.map((v) => {
-          v.image = "data:image/jpeg;base64," + v.image
-        })
+      .then((data: IResponse) => {
+        if (data.ok) {
+          this.customers = data.rows;
+          this.customers.map((v) => {
+            v.image = "data:image/jpeg;base64," + v.image
+          })
+          loading.dismiss();
+        } else {
+          loading.dismiss();
+          console.error("get data customers fail");
+        }
+      }).catch((error) => {
         loading.dismiss();
-      } else {
-        loading.dismiss();
-        console.error("get data customers fail");
-      }
-    }).catch((error) => {
-      loading.dismiss();
-      console.error(error);
-    })
+        console.error(error);
+      })
   }
 
   private goDetail(customer) {
     console.log(this.customers)
     // this.navCtrl.push(MapPage, { _user: user });
+  }
+
+  private search(event) {
+    let query: string = event.target.value;
+    this.customerProvider.search(this.token, query)
+      .then((data: IResponse) => {
+        if (data.ok) {
+          this.customers = data.rows;
+          this.customers.map((v) => {
+            v.image = "data:image/jpeg;base64," + v.image
+          })
+        } else {
+          console.error("get data customers fail");
+        }
+      }).catch((error) => {
+        console.error(error);
+      })
+      console.warn(this.customers)
   }
 
   private logout() {

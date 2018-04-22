@@ -11,7 +11,7 @@ interface IResponse {
 
 interface ICustomer {
   id: number,
-  customer_type: number,
+  customer_type_id: number,
   email: string,
   first_name: string,
   last_name: string,
@@ -79,9 +79,10 @@ export class AddCustomerPage {
             this.firstName = customer.first_name;
             this.lastName = customer.last_name;
             this.sex = customer.sex;
-            this.customerTypeId = customer.customer_type;
+            this.customerTypeId = customer.customer_type_id;
             this.email = customer.email;
             this.telephone = customer.telephone;
+            this.image = customer.image
             this.base64Image = "data:image/jpeg;base64," + customer.image;
           } else {
             console.error("get data fail");
@@ -94,23 +95,48 @@ export class AddCustomerPage {
   }
 
   private save() {
-    const customer = {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      sex: this.sex,
-      email: this.email,
-      telephone: this.telephone,
-      customerTypeId: this.customerTypeId,
-      image: this.image ? this.image : null
-    }
 
-    this.customerProvider.saveCustomer(this.token, customer)
-      .then((value: { ok: boolean, rows: Array<IResponse> }) => {
-        console.log(value)
-      })
-      .catch((error) => {
-        console.error(error);
-      })
+    if (this.customerId) {
+      // edit
+      const customer = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        sex: this.sex,
+        email: this.email,
+        telephone: this.telephone,
+        customerTypeId: this.customerTypeId,
+        image: this.image ? this.image : null, 
+        customerId: this.customerId
+      }
+
+      this.customerProvider.updateCustomer(this.token, customer)
+        .then((value: { ok: boolean, rows: Array<IResponse> }) => {
+          this.navCtrl.pop();
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+    } else {
+      // new 
+      const customer = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        sex: this.sex,
+        email: this.email,
+        telephone: this.telephone,
+        customerTypeId: this.customerTypeId,
+        image: this.image ? this.image : null
+      }
+  
+      this.customerProvider.saveCustomer(this.token, customer)
+        .then((value: { ok: boolean, rows: Array<IResponse> }) => {
+          this.navCtrl.pop();
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+    }
+    
   }
 
   private takePicture() {

@@ -18,6 +18,17 @@ export class CustomerProvider {
     })
   }
 
+  public search(token: string, query: string) {
+    return new Promise((resolve, reject) => {
+      const headers = new HttpHeaders({ "Content-Type": "application/json", "x-access-token": token });
+      this.http.get(`${this.url}/customers/search/${query}`, { headers: headers })
+        .subscribe(
+          (data) => resolve(data),
+          (error) => reject(error)
+        )
+    })
+  }
+
   public getGroups(token: string) {
     return new Promise((resolve, reject) => {
       const headers = new HttpHeaders({ "Content-Type": "application/json", "x-access-token": token });
@@ -74,6 +85,29 @@ export class CustomerProvider {
       )
     })
   }
+
+  public updateCustomer(token: string, customer: any) {
+    return new Promise((resolve, reject) => {
+      const headers = new HttpHeaders({ "Content-Type": "application/json", "x-access-token": token });
+      const body = {
+        "firstName": customer.firstName,
+        "lastName": customer.lastName,
+        "sex": customer.sex,
+        "customerTypeId": customer.customerTypeId,
+        "telephone": customer.telephone,
+        "email": customer.email,
+        "image": customer.image,
+        "customerId": customer.customerId
+      }
+
+      this.http.put(`${this.url}/customers`, body, { headers: headers })
+        .subscribe(
+          (data) => resolve(data),
+          (error) => reject(error)
+        )
+    })
+  }
+
 
 
 }
