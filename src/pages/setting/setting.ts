@@ -1,25 +1,45 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the SettingPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Push, PushOptions, PushObject } from "@ionic-native/push";
 
 @IonicPage()
 @Component({
   selector: 'page-setting',
   templateUrl: 'setting.html',
+  providers: [Push]
 })
 export class SettingPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private accept: boolean;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private push: Push) {
+
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingPage');
+
+  }
+
+  changeToggle() {
+    console.log(this.accept)
+    if (this.accept) {
+
+
+      
+      const options: PushOptions = {
+        android: {
+          senderID: "577106127826",
+          sound: true
+        }
+      }
+      const push: PushObject = this.push.init(options);
+      push.on("registration").subscribe(
+        (registration) => console.log("device registor", registration),
+        (error) => console.error(error)
+      )
+    } else {
+      
+    }
   }
 
 }
